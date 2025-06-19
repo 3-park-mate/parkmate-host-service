@@ -1,5 +1,6 @@
 package com.parkmate.hostservice.host.domain;
 
+import com.parkmate.hostservice.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -8,7 +9,7 @@ import org.hibernate.annotations.Comment;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "host")
-public class Host {
+public class Host extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +28,10 @@ public class Host {
     @Column(nullable = false, length = 20)
     private String phoneNumber;
 
+    @Comment("은행 이름")
+    @Column(nullable = false, length = 50)
+    private String bankName;
+
     @Comment("계좌번호")
     @Column(nullable = false, length = 30)
     private String accountNumber;
@@ -35,23 +40,26 @@ public class Host {
     @Column(nullable = false, length = 20)
     private String businessRegistrationNumber;
 
-    @Comment("정산 주기 (일 단위)")
-    @Column(nullable = false)
-    private Integer settlementCycle;
+    @Comment("정산 주기 (FIFTEEN: 15일마다, THIRTY: 30일마다)")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 10)
+    private SettlementCycle settlementCycle;
 
     @Builder
     private Host(Long id,
                  String hostUuid,
                  String name,
                  String phoneNumber,
+                 String bankName,
                  String accountNumber,
                  String businessRegistrationNumber,
-                 Integer settlementCycle) {
+                 SettlementCycle settlementCycle) {
 
         this.id = id;
         this.hostUuid = hostUuid;
         this.name = name;
         this.phoneNumber = phoneNumber;
+        this.bankName = bankName;
         this.accountNumber = accountNumber;
         this.businessRegistrationNumber = businessRegistrationNumber;
         this.settlementCycle = settlementCycle;

@@ -1,6 +1,7 @@
 package com.parkmate.hostservice.common.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.parkmate.hostservice.common.response.ApiResponse;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

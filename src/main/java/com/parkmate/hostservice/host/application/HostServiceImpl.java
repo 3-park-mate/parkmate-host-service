@@ -1,6 +1,7 @@
 package com.parkmate.hostservice.host.application;
 
 import com.parkmate.hostservice.host.domain.Host;
+import com.parkmate.hostservice.host.domain.SettlementCycle;
 import com.parkmate.hostservice.host.dto.request.HostRegisterRequestForHostServiceDto;
 import com.parkmate.hostservice.host.infrastructure.HostRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,10 @@ public class HostServiceImpl implements HostService {
                 .hostUuid(hostRegisterRequestForHostServiceDto.getHostUuid())
                 .name(hostRegisterRequestForHostServiceDto.getName())
                 .phoneNumber(hostRegisterRequestForHostServiceDto.getPhoneNumber())
+                .bankName(hostRegisterRequestForHostServiceDto.getBankName())
                 .accountNumber(hostRegisterRequestForHostServiceDto.getAccountNumber())
                 .businessRegistrationNumber(hostRegisterRequestForHostServiceDto.getBusinessRegistrationNumber())
-                .settlementCycle(hostRegisterRequestForHostServiceDto.getSettlementCycle())
+                .settlementCycle(SettlementCycle.from(hostRegisterRequestForHostServiceDto.getSettlementCycle()))
                 .build();
 
         hostRepository.save(host);

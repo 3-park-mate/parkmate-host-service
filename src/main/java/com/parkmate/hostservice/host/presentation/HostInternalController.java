@@ -14,7 +14,7 @@ public class HostInternalController {
 
     private final HostService hostService;
 
-    @PostMapping("/register")
+    @PostMapping
     public ApiResponse<String> registerHost(@RequestBody HostRegisterRequestForHostServiceDto hostRegisterRequestForHostServiceDto) {
 
         hostService.register(hostRegisterRequestForHostServiceDto);
