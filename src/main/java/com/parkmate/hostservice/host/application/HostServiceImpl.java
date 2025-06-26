@@ -1,8 +1,11 @@
 package com.parkmate.hostservice.host.application;
 
+import com.parkmate.hostservice.common.exception.BaseException;
+import com.parkmate.hostservice.common.response.ResponseStatus;
 import com.parkmate.hostservice.host.domain.Host;
 import com.parkmate.hostservice.host.domain.SettlementCycle;
 import com.parkmate.hostservice.host.dto.request.HostRegisterRequestForHostServiceDto;
+import com.parkmate.hostservice.host.dto.response.HostProfileResponseDto;
 import com.parkmate.hostservice.host.infrastructure.HostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,5 +32,14 @@ public class HostServiceImpl implements HostService {
                 .build();
 
         hostRepository.save(host);
+    }
+
+    @Transactional
+    @Override
+    public HostProfileResponseDto getHostProfile(String hostUuid) {
+        Host host = hostRepository.findByHostUuid(hostUuid)
+                .orElseThrow(() -> new BaseException(ResponseStatus.HOST_NOT_FOUND));
+
+        return HostProfileResponseDto.from(host);
     }
 }

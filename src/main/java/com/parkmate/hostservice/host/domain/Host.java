@@ -17,7 +17,7 @@ public class Host extends BaseEntity {
     private Long id;
 
     @Comment("호스트 UUID - 인증 서비스로부터 연동")
-    @Column(nullable = false, unique = true, length = 36)
+    @Column(name = "host_uuid", nullable = false, unique = true, length = 36)
     private String hostUuid;
 
     @Comment("호스트 이름")
