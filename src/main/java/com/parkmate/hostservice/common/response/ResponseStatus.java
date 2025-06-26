@@ -37,6 +37,7 @@ public enum ResponseStatus {
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, false, 404, "리뷰를 찾을 수 없습니다."),
     AUTH_USER_NOT_FOUND(HttpStatus.NOT_FOUND, false, 404, "존재하지 않는 사용자입니다."),
     AUTH_HOST_NOT_FOUND(HttpStatus.NOT_FOUND, false, 404, "존재하지 않는 호스트입니다."),
+    HOST_NOT_FOUND(HttpStatus.NOT_FOUND, false, 404, "호스트 정보를 찾을 수 없습니다."),
 
     // ❌ 409: 충돌
     REVIEW_ALREADY_EXISTS_FOR_PARKING_LOT(HttpStatus.CONFLICT, false, 409, "이미 해당 주차장에 대해 리뷰가 등록되었습니다."),
