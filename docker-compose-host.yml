@@ -11,7 +11,7 @@ services:
     ports:
       - "8083:8083"
     env_file:
-      - .env
+      - /home/ubuntu/env/.env.host
     networks:
       - backend
 
