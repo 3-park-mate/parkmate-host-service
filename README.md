@@ -1,4 +1,8 @@
-# 🏠 Host Service
+
+
+# parkmate-host-service
+
+## 🎯 개요
 
 > 호스트의 매출 조회 및 정산 기능을 제공하는 Spring Boot 애플리케이션
 
@@ -377,3 +381,4 @@ public interface BatchServiceClient {
 프로젝트에 대한 문의사항이 있으시면 이슈를 생성해 주세요.
 
 **ParkMate Team © 2025**
+
