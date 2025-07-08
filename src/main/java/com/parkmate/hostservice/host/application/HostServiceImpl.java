@@ -5,18 +5,15 @@ import com.parkmate.hostservice.common.response.ResponseStatus;
 import com.parkmate.hostservice.host.domain.Host;
 import com.parkmate.hostservice.host.domain.SettlementCycle;
 import com.parkmate.hostservice.host.dto.request.HostRegisterRequestForHostServiceDto;
-import com.parkmate.hostservice.host.dto.response.DailySalesResponseDto;
-import com.parkmate.hostservice.host.dto.response.HostProfileResponseDto;
-import com.parkmate.hostservice.host.dto.response.MonthlySalesResponseDto;
+import com.parkmate.hostservice.host.dto.response.*;
 import com.parkmate.hostservice.host.infrastructure.HostRepository;
 import com.parkmate.hostservice.host.infrastructure.client.HostSettlementFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
+import com.parkmate.hostservice.common.response.ApiResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -61,5 +58,55 @@ public class HostServiceImpl implements HostService {
     @Override
     public MonthlySalesResponseDto getMonthlySales(String hostUuid, String parkingLotUuid, int year, int month, SettlementCycle cycle) {
         return hostSettlementFeignClient.getMonthlySales(hostUuid, parkingLotUuid, year, month, cycle);
+    }
+
+    @Transactional
+    @Override
+    public List<ParkingLotWeeklySalesDto> getParkingLotsWeeklySalesByRange(String hostUuid, String startDate, String endDate) {
+        try {
+            ApiResponse<List<ParkingLotWeeklySalesDto>> response = hostSettlementFeignClient.getParkingLotsWeeklySalesByRange(hostUuid, startDate, endDate);
+            List<ParkingLotWeeklySalesDto> result = response != null && response.getData() != null
+                    ? response.getData()
+                    : java.util.Collections.emptyList();
+            return result;
+        } catch (Exception e) {
+            // 에러 로그 남기기 (운영 환경에서는 로거 사용 권장)
+            System.err.println("FeignClient 호출 에러: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
+
+    @Transactional
+    @Override
+    public List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(String hostUuid, int year, int month, Integer week) {
+        try {
+            return hostSettlementFeignClient.getParkingLotSalesSummary(hostUuid, year, month, week);
+        } catch (Exception e) {
+            System.err.println("FeignClient 호출 에러: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
+
+    @Override
+    public WeeklySalesResponseDto getWeeklySales(String hostUuid, String parkingLotUuid, int year, int week) {
+        return hostSettlementFeignClient.getWeeklySales(hostUuid, parkingLotUuid, year, week);
+    }
+
+    @Override
+    public WeeklySalesResponseDto getWeeklySalesByRange(String hostUuid, String parkingLotUuid, String startDate, String endDate) {
+        List<DailySalesSummaryDto> dailyList = hostSettlementFeignClient.getWeeklySalesByRange(hostUuid, parkingLotUuid, startDate, endDate);
+
+        List<WeeklySalesResponseDto.DailySales> dailySalesList = dailyList.stream()
+                .map(dto -> WeeklySalesResponseDto.DailySales.builder()
+                        .date(dto.getDate())
+                        .amount(dto.getAmount())
+                        .build())
+                .toList();
+
+        return WeeklySalesResponseDto.builder()
+                .startDate(startDate)
+                .endDate(endDate)
+                .dailySalesList(dailySalesList)
+                .build();
     }
 }
