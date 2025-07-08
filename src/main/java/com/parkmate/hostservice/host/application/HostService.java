@@ -5,8 +5,12 @@ import com.parkmate.hostservice.host.dto.request.HostRegisterRequestForHostServi
 import com.parkmate.hostservice.host.dto.response.DailySalesResponseDto;
 import com.parkmate.hostservice.host.dto.response.HostProfileResponseDto;
 import com.parkmate.hostservice.host.dto.response.MonthlySalesResponseDto;
+import com.parkmate.hostservice.host.dto.response.WeeklySalesResponseDto;
+import com.parkmate.hostservice.host.dto.response.ParkingLotSalesSummaryDto;
+import com.parkmate.hostservice.host.dto.response.ParkingLotWeeklySalesDto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface HostService {
 
@@ -17,5 +21,13 @@ public interface HostService {
     DailySalesResponseDto getDailySales(String hostUuid, String parkingLotUuid, LocalDate date);
 
     MonthlySalesResponseDto getMonthlySales(String hostUuid, String parkingLotUuid, int year, int month, SettlementCycle cycle);
+
+    WeeklySalesResponseDto getWeeklySales(String hostUuid, String parkingLotUuid, int year, int week);
+
+    WeeklySalesResponseDto getWeeklySalesByRange(String hostUuid, String parkingLotUuid, String startDate, String endDate);
+
+    List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(String hostUuid, int year, int month, Integer week);
+
+    List<ParkingLotWeeklySalesDto> getParkingLotsWeeklySalesByRange(String hostUuid, String startDate, String endDate);
 }
 
