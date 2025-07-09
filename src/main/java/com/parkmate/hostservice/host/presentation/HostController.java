@@ -143,8 +143,8 @@ public class HostController {
     }
 
     @Operation(
-        summary = "호스트 flexible 주간 통계 조회",
-        description = "baseDate를 기준으로 daysBefore, daysAfter 범위의 flexible 주간 통계를 조회합니다.",
+        summary = "호스트 flexible 주간 총매출 합계 조회",
+        description = "호스트가 등록한 모든 주차장의 flexible 주간 총매출 합계를 조회합니다. (totalWeeklySales만 반환)",
         tags = {"SETTLEMENT"}
     )
     @GetMapping("/parking-lots/weekly-statistics-flexible")
