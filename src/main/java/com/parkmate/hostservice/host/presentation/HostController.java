@@ -10,6 +10,7 @@ import com.parkmate.hostservice.host.dto.response.MonthlySalesResponseDto;
 import com.parkmate.hostservice.host.dto.response.ParkingLotSalesSummaryDto;
 import com.parkmate.hostservice.host.dto.response.ParkingLotWeeklySalesDto;
 import com.parkmate.hostservice.host.dto.response.WeeklySalesResponseDto;
+import com.parkmate.hostservice.host.dto.response.FlexibleWeeklyStatisticsDto;
 import com.parkmate.hostservice.host.vo.response.DailySalesResponseVo;
 import com.parkmate.hostservice.host.vo.response.HostProfileResponseVo;
 import com.parkmate.hostservice.host.vo.response.MonthlySalesResponseVo;
@@ -138,6 +139,22 @@ public class HostController {
             @RequestParam String startDate,
             @RequestParam String endDate) {
         List<ParkingLotWeeklySalesDto> result = hostService.getParkingLotsWeeklySalesByRange(hostUuid, startDate, endDate);
+        return ApiResponse.ok(result);
+    }
+
+    @Operation(
+        summary = "호스트 flexible 주간 통계 조회",
+        description = "baseDate를 기준으로 daysBefore, daysAfter 범위의 flexible 주간 통계를 조회합니다.",
+        tags = {"SETTLEMENT"}
+    )
+    @GetMapping("/parking-lots/weekly-statistics-flexible")
+    public ApiResponse<FlexibleWeeklyStatisticsDto> getFlexibleWeeklyStatistics(
+            @RequestHeader("X-Host-UUID") String hostUuid,
+            @RequestParam("baseDate") String baseDate,
+            @RequestParam(value = "daysBefore", required = false) Integer daysBefore,
+            @RequestParam(value = "daysAfter", required = false) Integer daysAfter
+    ) {
+        FlexibleWeeklyStatisticsDto result = hostService.getFlexibleWeeklyStatistics(hostUuid, baseDate, daysBefore, daysAfter);
         return ApiResponse.ok(result);
     }
 }

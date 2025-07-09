@@ -7,6 +7,7 @@ import com.parkmate.hostservice.host.dto.response.ParkingLotWeeklySalesDto;
 import com.parkmate.hostservice.host.dto.response.WeeklySalesResponseDto;
 import com.parkmate.hostservice.host.dto.response.DailySalesSummaryDto;
 import com.parkmate.hostservice.host.dto.response.ParkingLotSalesSummaryDto;
+import com.parkmate.hostservice.host.dto.response.FlexibleWeeklyStatisticsDto;
 import com.parkmate.hostservice.common.response.ApiResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +73,14 @@ public interface HostSettlementFeignClient {
             @RequestHeader("X-Host-UUID") String hostUuid,
             @RequestParam("year") int year,
             @RequestParam("week") int week
+    );
+
+    @GetMapping("/internal/settlements/parking-lots/weekly-statistics-flexible")
+    ApiResponse<FlexibleWeeklyStatisticsDto> getFlexibleWeeklyStatistics(
+        @RequestHeader("X-Host-UUID") String hostUuid,
+        @RequestParam("baseDate") String baseDate,
+        @RequestParam(value = "daysBefore", required = false) Integer daysBefore,
+        @RequestParam(value = "daysAfter", required = false) Integer daysAfter
     );
 }
 
