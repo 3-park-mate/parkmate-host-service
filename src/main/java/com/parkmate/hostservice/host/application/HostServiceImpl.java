@@ -94,6 +94,17 @@ public class HostServiceImpl implements HostService {
                 .build();
     }
 
+    @Override
+    public FlexibleWeeklyStatisticsDto getFlexibleWeeklyStatistics(String hostUuid, String baseDate, Integer daysBefore, Integer daysAfter) {
+        ApiResponse<FlexibleWeeklyStatisticsDto> response = hostSettlementFeignClient.getFlexibleWeeklyStatistics(hostUuid, baseDate, daysBefore, daysAfter);
+        if (response != null && response.getData() != null) {
+            return response.getData();
+        } else {
+            // 필요에 따라 예외 처리 또는 기본값 반환
+            return null;
+        }
+    }
+
     @Transactional
     @Override
     public List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(String hostUuid, int year, Integer month, Integer weekOfMonth) {
