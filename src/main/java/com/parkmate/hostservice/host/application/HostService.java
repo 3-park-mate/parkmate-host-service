@@ -5,10 +5,9 @@ import com.parkmate.hostservice.host.dto.request.HostRegisterRequestForHostServi
 import com.parkmate.hostservice.host.dto.response.DailySalesResponseDto;
 import com.parkmate.hostservice.host.dto.response.HostProfileResponseDto;
 import com.parkmate.hostservice.host.dto.response.MonthlySalesResponseDto;
-import com.parkmate.hostservice.host.dto.response.WeeklySalesResponseDto;
 import com.parkmate.hostservice.host.dto.response.ParkingLotSalesSummaryDto;
 import com.parkmate.hostservice.host.dto.response.ParkingLotWeeklySalesDto;
-
+import com.parkmate.hostservice.host.dto.response.WeeklySalesResponseDto;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,12 +21,10 @@ public interface HostService {
 
     MonthlySalesResponseDto getMonthlySales(String hostUuid, String parkingLotUuid, int year, int month, SettlementCycle cycle);
 
-    WeeklySalesResponseDto getWeeklySales(String hostUuid, String parkingLotUuid, int year, int week);
-
-    WeeklySalesResponseDto getWeeklySalesByRange(String hostUuid, String parkingLotUuid, String startDate, String endDate);
-
-    List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(String hostUuid, int year, int month, Integer week);
+    List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(String hostUuid, int year, Integer month, Integer weekOfMonth);
 
     List<ParkingLotWeeklySalesDto> getParkingLotsWeeklySalesByRange(String hostUuid, String startDate, String endDate);
+
+    WeeklySalesResponseDto getWeeklySalesByRange(String hostUuid, String parkingLotUuid, String startDate, String endDate);
 }
 
