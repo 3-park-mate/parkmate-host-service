@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import com.parkmate.hostservice.common.response.ApiResponse;
+import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -100,8 +101,7 @@ public class HostServiceImpl implements HostService {
         if (response != null && response.getData() != null) {
             return response.getData();
         } else {
-            // 필요에 따라 예외 처리 또는 기본값 반환
-            return null;
+            return new FlexibleWeeklyStatisticsDto(0);
         }
     }
 
