@@ -39,7 +39,7 @@ public interface HostSettlementFeignClient {
             @RequestHeader("X-Host-UUID") String hostUuid,
             @RequestParam("parkingLotUuid") String parkingLotUuid,
             @RequestParam("year") int year,
-            @RequestParam("week") int week
+            @RequestParam("weekOfMonth") int weekOfMonth
     );
 
     @GetMapping("/internal/settlements/weekly/range")
@@ -50,12 +50,12 @@ public interface HostSettlementFeignClient {
             @RequestParam("endDate") String endDate
     );
 
-    @GetMapping("/internal/settlements/summary")
-    List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(
+    @GetMapping("/internal/settlements/parking-lots/sales/summary")
+    ApiResponse<List<ParkingLotSalesSummaryDto>> getParkingLotSalesSummary(
             @RequestHeader("X-Host-UUID") String hostUuid,
             @RequestParam("year") int year,
             @RequestParam("month") int month,
-            @RequestParam(value = "week", required = false) Integer week
+            @RequestParam(value = "weekOfMonth", required = false) Integer weekOfMonth
     );
 
     // 기존: 날짜 범위로 전체 주차장 주별 매출 조회

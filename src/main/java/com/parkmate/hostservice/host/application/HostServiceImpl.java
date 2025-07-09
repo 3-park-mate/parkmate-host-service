@@ -76,22 +76,6 @@ public class HostServiceImpl implements HostService {
         }
     }
 
-    @Transactional
-    @Override
-    public List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(String hostUuid, int year, int month, Integer week) {
-        try {
-            return hostSettlementFeignClient.getParkingLotSalesSummary(hostUuid, year, month, week);
-        } catch (Exception e) {
-            System.err.println("FeignClient 호출 에러: " + e.getMessage());
-            return java.util.Collections.emptyList();
-        }
-    }
-
-    @Override
-    public WeeklySalesResponseDto getWeeklySales(String hostUuid, String parkingLotUuid, int year, int week) {
-        return hostSettlementFeignClient.getWeeklySales(hostUuid, parkingLotUuid, year, week);
-    }
-
     @Override
     public WeeklySalesResponseDto getWeeklySalesByRange(String hostUuid, String parkingLotUuid, String startDate, String endDate) {
         List<DailySalesSummaryDto> dailyList = hostSettlementFeignClient.getWeeklySalesByRange(hostUuid, parkingLotUuid, startDate, endDate);
@@ -108,5 +92,20 @@ public class HostServiceImpl implements HostService {
                 .endDate(endDate)
                 .dailySalesList(dailySalesList)
                 .build();
+    }
+
+    @Transactional
+    @Override
+    public List<ParkingLotSalesSummaryDto> getParkingLotSalesSummary(String hostUuid, int year, Integer month, Integer weekOfMonth) {
+        try {
+            ApiResponse<List<ParkingLotSalesSummaryDto>> response = hostSettlementFeignClient.getParkingLotSalesSummary(hostUuid, year, month, weekOfMonth);
+            List<ParkingLotSalesSummaryDto> result = response != null && response.getData() != null
+                    ? response.getData()
+                    : java.util.Collections.emptyList();
+            return result;
+        } catch (Exception e) {
+            System.err.println("FeignClient 호출 에러: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
     }
 }

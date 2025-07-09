@@ -122,8 +122,8 @@ public class HostController {
             @RequestHeader("X-Host-UUID") String hostUuid,
             @RequestParam int year,
             @RequestParam int month,
-            @RequestParam(required = false) Integer week) {
-        List<ParkingLotSalesSummaryDto> summaryList = hostService.getParkingLotSalesSummary(hostUuid, year, month, week);
+            @RequestParam(required = false) Integer weekOfMonth) {
+        List<ParkingLotSalesSummaryDto> summaryList = hostService.getParkingLotSalesSummary(hostUuid, year, month, weekOfMonth);
         return ApiResponse.ok(summaryList);
     }
 
