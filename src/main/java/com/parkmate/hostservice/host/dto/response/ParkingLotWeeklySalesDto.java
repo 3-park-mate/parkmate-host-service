@@ -20,7 +20,7 @@ public class ParkingLotWeeklySalesDto {
     @AllArgsConstructor
     @Builder
     public static class DailySales {
-        private String date; // yyyy-MM-dd
+        private String date;
         private int amount;
     }
 

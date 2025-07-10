@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import com.parkmate.hostservice.common.response.ApiResponse;
-import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor

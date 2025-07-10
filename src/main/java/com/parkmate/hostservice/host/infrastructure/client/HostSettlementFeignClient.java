@@ -13,7 +13,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.List;
 
 @FeignClient(name = "batch-service")
@@ -59,7 +58,6 @@ public interface HostSettlementFeignClient {
             @RequestParam(value = "weekOfMonth", required = false) Integer weekOfMonth
     );
 
-    // 기존: 날짜 범위로 전체 주차장 주별 매출 조회
     @GetMapping("/internal/settlements/weekly/range/all")
     ApiResponse<List<ParkingLotWeeklySalesDto>> getParkingLotsWeeklySalesByRange(
             @RequestHeader("X-Host-UUID") String hostUuid,
@@ -67,7 +65,6 @@ public interface HostSettlementFeignClient {
             @RequestParam("endDate") String endDate
     );
 
-    // 신규: year, week로 전체 주차장 주별 매출 조회
     @GetMapping("/internal/settlements/weekly/all")
     List<ParkingLotWeeklySalesDto> getAllParkingLotsWeeklySales(
             @RequestHeader("X-Host-UUID") String hostUuid,
