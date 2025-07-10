@@ -32,9 +32,6 @@ public class HostProfileResponseDto {
         this.settlementCycle = settlementCycle;
     }
 
-    /**
-     * Host 도메인 객체로부터 DTO 생성
-     */
     public static HostProfileResponseDto from(Host host) {
         return HostProfileResponseDto.builder()
                 .name(host.getName())
@@ -46,9 +43,6 @@ public class HostProfileResponseDto {
                 .build();
     }
 
-    /**
-     * VO 객체로 변환 (클라이언트 응답용)
-     */
     public HostProfileResponseVo toVo() {
         return HostProfileResponseVo.builder()
                 .name(name)

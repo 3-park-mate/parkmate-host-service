@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FlexibleWeeklyStatisticsDto {
-    private int totalWeeklySales; // 주간 총 매출
+    private int totalWeeklySales;
 }
